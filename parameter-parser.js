@@ -123,6 +123,7 @@ class ParameterParser {
           if (isClosing(token) && this.counter == 0 && this.destructuringType != null) {
             this.pushBuffer()
             this.pushDestructuringKeys()
+            this.state = state.VARIABLE
             continue
           }
           if (isOpening(token)) {
@@ -192,7 +193,7 @@ class ParameterParser {
         if (this.destructuringType == null) {
           this.parsed.push({
             type: 'DEFAULT',
-            name: topStack.name,
+            name: topStack.name || topStack.value,
             value: defaultParam,
           })
         } else {
